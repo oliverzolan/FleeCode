@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Progress tracking
+  completedProblems Problem[] @relation("UserCompletedProblems")
+  submissions       Submission[]
+  progress          UserProgress[]
+  
+  @@map("users")
+}
+
+model Problem {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  difficulty  Difficulty
+  description String
+  learningContent String
+  starterCode String
+  solution    String
+  testCases   TestCase[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  submissions   Submission[]
+  completedBy   User[] @relation("UserCompletedProblems")
+  progress      UserProgress[]
+  
+  @@map("problems")
+}
+
+model TestCase {
+  id        String  @id @default(cuid())
+  problemId String
+  input     String
+  expectedOutput String
+  isHidden  Boolean @default(false)
+  
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  
+  @@map("test_cases")
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  userId    String
+  problemId String
+  code      String
+  language  String
+  status    SubmissionStatus
+  runtime   Int?
+  memory    Int?
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  
+  @@map("submissions")
+}
+
+model UserProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  problemId String
+  attempts  Int      @default(0)
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, problemId])
+  @@map("user_progress")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum SubmissionStatus {
+  PENDING
+  ACCEPTED
+  WRONG_ANSWER
+  TIME_LIMIT_EXCEEDED
+  RUNTIME_ERROR
+  COMPILATION_ERROR
+}
