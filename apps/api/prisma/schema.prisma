@@ -30,7 +30,7 @@ model Problem {
   difficulty  Difficulty
   description String
   learningContent String
-  starterCode String
+  starterCodeJson Json
   solution    String
   testCases   TestCase[]
   createdAt   DateTime @default(now())

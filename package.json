@@ -15,7 +15,8 @@
     "db:studio": "cd apps/api && pnpm db:studio"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "tsx": "^4.20.3"
   },
   "keywords": [],
   "author": "",
