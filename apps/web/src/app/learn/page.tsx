@@ -4,11 +4,10 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { DashboardShell } from '@/components/fleecode/dashboard-shell'
-import { ProblemsStats } from '@/components/fleecode/problems-stats'
-import { RecentActivity } from '@/components/fleecode/recent-activity'
-import { StudyRecommendations } from '@/components/fleecode/study-recommendations'
+import { DataStructureTree } from '@/components/fleecode/data-structure-tree'
+import { ConceptExplanation } from '@/components/fleecode/concept-explanation'
 
-export default function Dashboard() {
+export default function LearnPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -35,20 +34,18 @@ export default function Dashboard() {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Learning Center</h1>
             <p className="text-muted-foreground">
-              Welcome back, {session.user?.name || session.user?.email}
+              Master data structures and algorithms concepts
             </p>
           </div>
         </div>
 
-        <ProblemsStats />
-        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RecentActivity />
-          <StudyRecommendations />
+          <DataStructureTree />
+          <ConceptExplanation concepts={["Arrays", "Hash Tables", "Two Pointers", "Sliding Window"]} />
         </div>
       </div>
     </DashboardShell>
   )
-} 
+}

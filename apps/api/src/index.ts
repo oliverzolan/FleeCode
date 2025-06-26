@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/auth';
+import problemsRoutes from './routes/problems';
 
 // Load environment variables
 dotenv.config();
@@ -15,7 +16,12 @@ const prisma = new PrismaClient();
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(morgan('combined'));
 app.use(express.json());
 
@@ -36,6 +42,9 @@ app.get('/api/test-db', async (req, res) => {
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+
+// Problems routes
+app.use('/api/problems', problemsRoutes);
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
