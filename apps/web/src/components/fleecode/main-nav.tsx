@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, Code, Github, Home, Settings, User, LogOut } from "lucide-react"
+import { BookOpen, Code, Github, Home, Settings, User, LogOut, Trophy } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
 
@@ -35,18 +35,18 @@ export function MainNav() {
             Dashboard
           </Link>
           <Link
+            href="/blind75"
+            className="flex items-center gap-1 font-medium text-foreground transition-colors hover:text-foreground/80"
+          >
+            <Trophy className="h-4 w-4" />
+            Blind 75
+          </Link>
+          <Link
             href="/problems"
             className="flex items-center gap-1 font-medium text-foreground transition-colors hover:text-foreground/80"
           >
             <Code className="h-4 w-4" />
             Problems
-          </Link>
-          <Link
-            href="/learn"
-            className="flex items-center gap-1 font-medium text-foreground/60 transition-colors hover:text-foreground/80"
-          >
-            <BookOpen className="h-4 w-4" />
-            Learn
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">
@@ -67,7 +67,6 @@ export function MainNav() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
                     <AvatarFallback>
                       {session.user.name?.charAt(0) || session.user.email?.charAt(0) || <User className="h-4 w-4" />}
                     </AvatarFallback>

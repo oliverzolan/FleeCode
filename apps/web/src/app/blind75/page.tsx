@@ -4,10 +4,10 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { DashboardShell } from '@/components/fleecode/dashboard-shell'
-import { DataStructureTree } from '@/components/fleecode/data-structure-tree'
-import { ConceptExplanation } from '@/components/fleecode/concept-explanation'
+import { Blind75ProblemsList } from '@/components/fleecode/blind75-problems-list'
+import { Blind75Hero } from '@/components/fleecode/blind75-hero'
 
-export default function LearnPage() {
+export default function Blind75Page() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -34,18 +34,17 @@ export default function LearnPage() {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Learning Center</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Blind 75</h1>
             <p className="text-muted-foreground">
-              Master data structures and algorithms concepts
+              Essential coding interview problems curated by Blind
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <DataStructureTree />
-          <ConceptExplanation concepts={["Arrays", "Hash Tables", "Two Pointers", "Sliding Window"]} />
-        </div>
+        <Blind75Hero />
+
+        <Blind75ProblemsList />
       </div>
     </DashboardShell>
   )
-}
+} 

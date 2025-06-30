@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Fetch problems from your API server
     const response = await fetch(`${process.env.API_URL}/api/problems`, {
       headers: {
         'Authorization': `Bearer ${session.accessToken}`,

@@ -1,4 +1,5 @@
 import { Trophy, Target, Clock, BookOpen } from "lucide-react"
+import Link from "next/link"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -6,61 +7,55 @@ import { Progress } from "@/components/ui/progress"
 export function ProblemsStats() {
   const stats = [
     {
-      label: "Solved",
-      value: "23",
-      total: "150",
-      percentage: 15,
+      label: "Blind 75",
+      value: "0",
+      total: "75",
+      percentage: 0,
       icon: Trophy,
       color: "text-green-600",
+      description: "Essential coding interview problems",
+      href: "/blind75"
     },
     {
-      label: "In Progress",
-      value: "8",
+      label: "LeetCode 150",
+      value: "0",
       total: "150",
-      percentage: 5,
+      percentage: 0,
       icon: Target,
       color: "text-blue-600",
-    },
-    {
-      label: "Study Time",
-      value: "42h",
-      total: "This month",
-      percentage: 70,
-      icon: Clock,
-      color: "text-purple-600",
-    },
-    {
-      label: "Concepts",
-      value: "12",
-      total: "25",
-      percentage: 48,
-      icon: BookOpen,
-      color: "text-orange-600",
+      description: "Most important interview questions",
+      href: "/problems"
     },
   ]
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Your Progress</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
-                <span className="text-sm font-medium">{stat.label}</span>
+    <>
+      {stats.map((stat) => (
+        <Link key={stat.label} href={stat.href}>
+          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                {stat.label}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-medium text-muted-foreground">
+                    {stat.description}
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold">{stat.value}/{stat.total}</div>
+                    <div className="text-xs text-muted-foreground">problems solved</div>
+                  </div>
+                </div>
+                <Progress value={stat.percentage} className="h-2" />
               </div>
-              <div className="text-right">
-                <div className="text-sm font-bold">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.total}</div>
-              </div>
-            </div>
-            <Progress value={stat.percentage} className="h-2" />
-          </div>
-        ))}
-      </CardContent>
-    </Card>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
+    </>
   )
 }

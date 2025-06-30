@@ -11,7 +11,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     <div className="flex min-h-screen flex-col">
       <MainNav />
       <div className="flex flex-1 gap-4 p-4 pt-6 md:gap-8 md:p-8">
-        <aside className="hidden w-64 shrink-0 md:block">
+        <aside className="hidden md:block w-64 shrink-0 sticky top-20 self-start">
           <SideNav />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>

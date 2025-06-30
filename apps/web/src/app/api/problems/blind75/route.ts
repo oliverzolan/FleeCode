@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     
@@ -13,7 +10,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const response = await fetch(`${process.env.API_URL}/api/problems/${params.id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/problems/blind75`, {
       headers: {
         'Authorization': `Bearer ${session.accessToken}`,
         'Content-Type': 'application/json',
@@ -21,16 +18,13 @@ export async function GET(
     })
 
     if (!response.ok) {
-      if (response.status === 404) {
-        return NextResponse.json({ error: 'Problem not found' }, { status: 404 })
-      }
-      throw new Error('Failed to fetch problem')
+      throw new Error('Failed to fetch Blind 75 problems')
     }
 
-    const problem = await response.json()
-    return NextResponse.json(problem)
+    const problems = await response.json()
+    return NextResponse.json(problems)
   } catch (error) {
-    console.error('Error fetching problem:', error)
+    console.error('Error fetching Blind 75 problems:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 } 

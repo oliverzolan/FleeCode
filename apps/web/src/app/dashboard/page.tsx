@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { DashboardShell } from '@/components/fleecode/dashboard-shell'
 import { ProblemsStats } from '@/components/fleecode/problems-stats'
-import { RecentActivity } from '@/components/fleecode/recent-activity'
-import { StudyRecommendations } from '@/components/fleecode/study-recommendations'
+import { SimplifiedProblemsList } from '@/components/fleecode/simplified-problems-list'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -42,11 +41,20 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <ProblemsStats />
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <RecentActivity />
-          <StudyRecommendations />
+        {/* Widgets Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ProblemsStats />
+        </div>
+
+        {/* Problems List Section */}
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Problems</h2>
+            <p className="text-muted-foreground">
+              Practice coding problems to improve your skills
+            </p>
+          </div>
+          <SimplifiedProblemsList />
         </div>
       </div>
     </DashboardShell>
